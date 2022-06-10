@@ -59,6 +59,7 @@ module.exports = {
                     // expiresIn
                })
 
+               /* datos a mostrar en el json(postman) */
                const data = {
                    id: myUser.id,
                    name:myUser.name,
@@ -66,7 +67,7 @@ module.exports = {
                    email: myUser.email,
                    phone: myUser.phone,
                    image: myUser.image,
-                   session: `JWT ${token}`
+                   session_token: `JWT ${token}`
                };
                return res.status(201).json({
                    success: true,
