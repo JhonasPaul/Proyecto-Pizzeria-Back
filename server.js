@@ -31,7 +31,7 @@ app.set('port', port)
 users(app);
 
 
-server.listen(3000, '172.21.0.1' || 'localhost', function () {
+server.listen(3000, '172.23.48.1' || 'localhost', function () {
     console.log('Aplicacion de NodeJs ' + process.pid + ' Iniciada')
 });
 
