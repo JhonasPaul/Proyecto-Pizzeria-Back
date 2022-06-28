@@ -6,6 +6,20 @@ const logger = require('morgan')
 const cors = require('cors');
 const res = require('express/lib/response');
 const passport = require('passport');
+const multer = require('multer');
+const serviceAccount = require('./serviceAccountKey.json');
+const admin = require('firebase-admin');
+
+/* inicia elproyecto con firebase */
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+/* guarda la iamgen temporal hasta que se suba a firebase */
+const upload = multer({
+    storage: multer.memoryStorage()
+});
+
 
 /* Rutas */
 const users = require('./routes/usersRoutes')
@@ -28,10 +42,10 @@ app.disable('x-powered-by')
 app.set('port', port)
 
 /* llamar rutas */
-users(app);
+users(app, upload);
 
 
-server.listen(3000, '172.23.48.1' || 'localhost', function () {
+server.listen(3000, '172.26.176.1' || 'localhost', function () {
     console.log('Aplicacion de NodeJs ' + process.pid + ' Iniciada')
 });
 

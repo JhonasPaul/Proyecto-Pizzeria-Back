@@ -43,3 +43,20 @@ values('RESTAURANTE', 'restaurante/home', 'https://media-cdn.tripadvisor.com/med
 	   
 insert into roles(name,route,image,created_at,updated_at)
 values('REPARTIDOR', 'delivery/home', 'https://simondecirene.cl/simondecirene_webtres/wp-content/uploads/2020/05/Delivery_1920x700.png', '2022-06-12', '2022-06-12');
+
+select U.id, U.email, U.name, U.lastname, U.image, U.phone, U.password, U.session_token, json_agg(
+        json_build_object(
+            'id', R.id,
+            'name', R.name,
+            'image', R.image,
+            'route', R.route
+        )
+    ) as roles
+    from users as U
+    inner join user_has_roles as UHR on UHR.id_user = U.id  
+    inner join roles as R  on R.id = UHR.id_rol where U.email = 'john@hotmail.com'
+    group by U.id;
+
+select * from users;
+select * from roles;
+select * from user_has_roles;
