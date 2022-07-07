@@ -9,9 +9,7 @@ User.getAll = () => {
 }
 
 User.findById = (id, callback) => {
-    const sql = `select id, email, name, lastname, image, phone, password, session_token from users
-    where id = $1`;
-
+    const sql = `select id, email, name, lastname, image, phone, password, session_token from users where id = $1`;
     return db.oneOrNone(sql, id).then(user => { callback(null, user) })
 }
 
@@ -49,17 +47,7 @@ User.create = async (user) => {
 }
 
  User.update = (user) => {
-    const sql = `
-    update 
-    users 
-    set 
-    name = $2, 
-    lastname = $3,
-    phone = $4, 
-    image = $5,
-    updated_at = $6
-     where 
-     id = $1`;
+    const sql = `update users set name = $2, lastname = $3,phone = $4, image = $5,updated_at = $6where id = $1`;
     return db.none(sql, [
         user.id, 
         user.name, 
@@ -67,6 +55,16 @@ User.create = async (user) => {
         user.phone, 
         user.image, 
         new Date()
+    ])
+} 
+
+
+/* actualizar el campo session_token */
+User.updateSessionToken = (id_user, session_token) => {
+    const sql = `update users set session_token = $2 where id = $1`;
+    return db.none(sql, [
+        id_user,
+        session_token
     ])
 } 
 

@@ -21,7 +21,6 @@ module.exports = {
         }
     },
 
-
     async register(req, res, next) {
         try {
             const user = req.body;/* captura lo que el cliente envia a traves de parametros */
@@ -61,10 +60,7 @@ module.exports = {
             })
         }
     },
-
-
-   
-
+    
     async login(req, res, next) {
         try {
             /* se mandara por el cliente */
@@ -96,6 +92,10 @@ module.exports = {
                    session_token: `JWT ${token}`,
                    roles: myUser.roles
                }
+
+               /* actualizar el campo session_token */
+               await User.updateSessionToken(myUser.id, `JWT ${token}`)
+               
                console.log(`USUARIO ENVIADO ${data}`)
                return res.status(201).json({
                    success: true,
@@ -137,6 +137,33 @@ module.exports = {
                     user.image = url
                 }
             }
+
+            await User.update(user);/* guardando la url en la base de datos */
+            return res.status(201).json({
+                success: true, 
+                message: 'Los datos del usuarion se han actualizado corretamente',
+                data: user
+            });
+
+
+        }catch(error){
+            console.log(`Error: ${error}`);
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error al actualizar los datos del usuario',
+                error: error
+            })
+        }
+    },
+
+
+    async updatewithoutImage(req, res, next){
+        try{
+            console.log('Usuario', req.body)
+
+            const user = req.body; /* el cliente debe enviar un objeto user con datos del usuario */
+            console.log('Usuario Parseado', user);
+
 
             await User.update(user);/* guardando la url en la base de datos */
             return res.status(201).json({
