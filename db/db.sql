@@ -60,3 +60,16 @@ select U.id, U.email, U.name, U.lastname, U.image, U.phone, U.password, U.sessio
 select * from users;
 select * from roles;
 select * from user_has_roles;
+
+
+/* categorias */
+drop table if exists categories cascade;
+create table categories(
+	id bigserial PRIMARY KEY,
+	name varchar (180) not null unique,
+	image varchar (255) not null,
+	created_At timestamp(0) not null,
+	updated_at timestamp(0)not null
+);
+
+select * from categories;
