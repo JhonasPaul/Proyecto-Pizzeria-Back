@@ -47,7 +47,7 @@ users(app, upload);
 categories(app, upload);
 
 
-server.listen(3000, '172.23.240.1' || 'localhost', function () {
+server.listen(3000, '192.168.18.138' || 'localhost', function () {
     console.log('Aplicacion de NodeJs ' + process.pid + ' Iniciada')
 });
 
