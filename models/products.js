@@ -2,6 +2,15 @@ const db = require('../config/config')
 
 const Product = {};
 
+Product.findByCategory = (id_category) =>{
+    const sql =
+    `select products.id, products.name, description, price, image1, image2, image3, id_category
+    from products 
+    inner join categories on products.id_category = categories.id
+    where categories.id = $1`;
+    return db.manyOrNone(sql, id_category);
+}
+
 Product.create = (product) =>{
     const sql = 
     `insert into products(name, description, price, image1, image2, image3, id_category, created_at, updated_at)values($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id`;

@@ -81,7 +81,7 @@ create table products(
     name varchar (180) not null unique,
     description varchar (255) not  null,
     price decimal default 0, 
-    image1 varchar(255) not null,
+    image1 varchar(255) null,
     image2 varchar(255) null,
     image3 varchar(255) null,
     id_category bigint not null,
@@ -89,3 +89,8 @@ create table products(
 	updated_at timestamp(0)not null,
     FOREIGN key(id_category) REFERENCES categories(id) on update cascade on delete cascade
 );
+
+select products.id, products.name, description, price, image1, image2, image3, id_category
+from products 
+inner join categories on products.id_category = categories.id
+where categories.id = 1

@@ -3,7 +3,27 @@ const storage = require('../utils/cloud_storage')
 const asyncForEach = require('../utils/async_foreach');
 const { update } = require('./usersController');
 
+
 module.exports = {
+
+    async findByCategory(req, res, next){
+        try{
+            const id_category = req.params.id_category; /* el id de la categoria envia el cliente */
+            const data = await Product.findByCategory(id_category);
+
+            return res.status(201).json(data);
+
+        }catch(error){
+            console.log(`Error: ${error}`);
+                return res.status(501).json({
+                    message: 'Error al registrar, no se pudo listar los productos por categoria',
+                    success: false,
+                    error: error
+                });
+        }
+    },
+
+
     async create(req, res, next){
         let product = JSON.parse(req.body.product);
 
@@ -55,8 +75,9 @@ module.exports = {
                 console.log(`Error: ${error}`);
                 return res.status(501).json({
                     message: 'Error al registrar, el producto no tiene imagen' + error,
-                    success: files
-                })
+                    success: false,
+                    error: error
+                });
             }
         }
     }
